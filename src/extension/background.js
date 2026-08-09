@@ -1,4 +1,6 @@
-const API_URL = 'http://192.168.72.5:8080/index.php'; // Oder https://closign.fabforge.ch/index.php
+import { CONFIG } from './config.js';
+
+const API_URL = CONFIG.API_URL;
 
 // Setup Context Menu on Install
 chrome.runtime.onInstalled.addListener(() => {

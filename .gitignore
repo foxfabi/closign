@@ -9,3 +9,4 @@
 .DS_Store
 
 # Docker local data if any
+src/extension/config.js

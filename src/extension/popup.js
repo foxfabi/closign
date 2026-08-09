@@ -1,5 +1,6 @@
-const API_URL = 'http://192.168.72.5:8080/index.php'; // Für Hostpoint später anpassen!
+import { CONFIG } from './config.js';
 
+const API_URL = CONFIG.API_URL;
 const searchInput = document.getElementById('search');
 const langSelect = document.getElementById('lang');
 const moodSelect = document.getElementById('mood');
