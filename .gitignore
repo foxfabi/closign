@@ -1,0 +1,11 @@
+# SQLite local runtime files
+*.db-journal
+*.db-wal
+*.db-shm
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+
+# Docker local data if any

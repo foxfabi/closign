@@ -1,0 +1,168 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Contextual Closings API",
+    "description": "API zur Generierung und Auswahl von passenden Nachrichtenschlüssen basierend auf Tonalität, Beziehungsgrad, Kontext und Sprache.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/v1/signoff": {
+      "get": {
+        "summary": "Liefert passende Grussformen basierend auf Kontext & Tonalität",
+        "operationId": "getSignoffs",
+        "parameters": [
+          {
+            "name": "mood",
+            "in": "query",
+            "description": "Gewünschte Tonalität oder Stimmung",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["neutral", "annoyed", "sensual", "subculture", "welcoming", "location_based", "ironic", "heartfelt"],
+              "default": "neutral"
+            }
+          },
+          {
+            "name": "relationship",
+            "in": "query",
+            "description": "Beziehungsgrad zum Empfänger (1 = sehr förmlich/distanziert, 5 = intim/sehr nah)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5,
+              "default": 3
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "ISO-Sprachcode (z.B. de, en, fr)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de"
+            }
+          },
+          {
+            "name": "channel",
+            "in": "query",
+            "description": "Kommunikationskanal zur Feinabstimmung der Länge/Form",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["email", "sms", "messenger", "forum"],
+              "default": "messenger"
+            }
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "description": "Optionaler Ort/Region für ortsbezogene Grüsse (z.B. 'mountains', 'beach', 'homeoffice')",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Anzahl der zurückzugebenden Vorschläge",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 3,
+              "maximum": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Erfolgreiche Antwort mit einer Liste von Grussformen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignoffResponse"
+                },
+                "example": {
+                  "query_context": {
+                    "mood": "annoyed",
+                    "relationship": 2,
+                    "lang": "de"
+                  },
+                  "count": 2,
+                  "results": [
+                    {
+                      "id": "signoff-001",
+                      "text": "Gruss ohne Gnuss",
+                      "mood": "annoyed",
+                      "formality_level": 2,
+                      "tags": ["bad-one", "dry", "passive-aggressive"]
+                    },
+                    {
+                      "id": "signoff-002",
+                      "text": "Mit der Bitte um Nicht-Rückmeldung",
+                      "mood": "annoyed",
+                      "formality_level": 3,
+                      "tags": ["sarcastic", "work"]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ungültige Parameter"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SignoffItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string",
+            "description": "Der eigentliche Gruss-Text"
+          },
+          "mood": {
+            "type": "string"
+          },
+          "formality_level": {
+            "type": "integer",
+            "description": "Formeller Grad von 1 (sehr informell) bis 5 (hochoffiziell)"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SignoffResponse": {
+        "type": "object",
+        "properties": {
+          "query_context": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "count": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SignoffItem"
+            }
+          }
+        }
+      }
+    }
+  }
+}

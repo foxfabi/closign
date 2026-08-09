@@ -1,0 +1,11 @@
+# Protect SQLite Database
+<FilesMatch "\.(sqlite|db)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Enable URL Rewriting
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^v1/signoff index.php [L,QSA]

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 300px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 12px;
+      margin: 0;
+      background: #f8f9fa;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .shortcut-hint {
+      font-size: 10px;
+      color: #a0aec0;
+      background: #edf2f7;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .search-box {
+      margin-bottom: 8px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 7px 10px;
+      font-size: 12px;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: #3182ce;
+      box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+    }
+
+    .filters {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    select {
+      flex: 1;
+      padding: 5px;
+      font-size: 11px;
+      border: 1px solid #cbd5e0;
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    .result-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .item {
+      background: #fff;
+      padding: 8px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .item:hover,
+    .item.selected {
+      background: #ebf8ff;
+      border-color: #3182ce;
+    }
+
+    .item-sub {
+      font-size: 10px;
+      color: #718096;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h3>Closign Picker</h3>
+    <span class="shortcut-hint">Alt + C</span>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Suchen... (z.B. Berg, Kaffee, Genervt)" autoFocus />
+  </div>
+
+  <div class="filters">
+    <select id="lang">
+      <option value="de">Deutsch</option>
+      <option value="en">English</option>
+    </select>
+    <select id="mood">
+      <option value="">Alle Moods</option>
+      <option value="neutral">Neutral</option>
+      <option value="annoyed">Genervt</option>
+      <option value="sensual">Lustvoll</option>
+      <option value="ironic">Ironisch</option>
+      <option value="location_based">Ort / Natur</option>
+      <option value="welcoming">Einladend</option>
+    </select>
+  </div>
+
+  <div id="results" class="result-list">Lade Vorschläge...</div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
